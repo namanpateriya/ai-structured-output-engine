@@ -1,0 +1,9 @@
+# CLI
+python -m app.cli --input "Login fails randomly" --schema "{\"problem\":\"\",\"root_causes\":[],\"impact\":\"\",\"priority\":\"\"}"
+
+# API
+uvicorn app.main:app --reload
+
+curl -X POST "http://127.0.0.1:8000/generate" \
+-H "Content-Type: application/json" \
+-d "{\"input\":\"Login fails randomly\",\"schema\":{\"problem\":\"\",\"root_causes\":[],\"impact\":\"\",\"priority\":\"\"}}"
