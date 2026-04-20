@@ -7,6 +7,7 @@ logger = get_logger(__name__)
 
 app = FastAPI(title="AI Structured Output Engine")
 
+
 class Request(BaseModel):
     input: str
     schema: dict
@@ -21,5 +22,8 @@ def health():
 def generate(req: Request):
     if not req.input.strip():
         raise HTTPException(400, "Empty input")
+
+    if not isinstance(req.schema, dict):
+        raise HTTPException(400, "Invalid schema")
 
     return generate_structured_output(req.input, req.schema)
