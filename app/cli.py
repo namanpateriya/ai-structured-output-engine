@@ -2,9 +2,6 @@ import argparse
 import json
 import sys
 from app.service import generate_structured_output
-from app.utils.logger import get_logger
-
-logger = get_logger(__name__)
 
 parser = argparse.ArgumentParser(description="AI Structured Output Engine")
 
@@ -15,6 +12,8 @@ args = parser.parse_args()
 
 try:
     schema = json.loads(args.schema)
+    if not isinstance(schema, dict):
+        raise ValueError
 except Exception:
     print("Invalid schema JSON")
     sys.exit(1)
