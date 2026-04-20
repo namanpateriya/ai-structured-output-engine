@@ -10,10 +10,16 @@ model = ModelClient()
 
 
 def generate_structured_output(input_text: str, schema: dict):
-    valid, processed_input = validate_input(input_text)
+    if not isinstance(schema, dict):
+        return {"error": "Invalid schema format"}
+
+    valid, processed_input, truncated = validate_input(input_text)
 
     if not valid:
         return {"error": processed_input}
+
+    if truncated:
+        logger.warning("Input was truncated due to length")
 
     prompt = build_prompt(processed_input, schema)
 
